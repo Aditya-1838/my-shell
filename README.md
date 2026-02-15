@@ -26,7 +26,7 @@ This shell was developed to gain hands-on experience with Linux process handling
 
 - [Features](#features)
 - [Supported Commands](#supported-commands)
-- [Project Structure](#project-structure)
+- [Project Structure and Architecture Overview](#project-structure-and-architecture-overview)
 - [Requirements](#requirements)
 - [Installation and Build](#installation-and-build)
 - [Running the Shell](#running-the-shell)
@@ -78,7 +78,7 @@ Executables located in directories such as `/bin` and `/usr/bin` are supported a
 
 ---
 
-## Project Structure
+## Project Structure and Architecture Overview
 
 ```text
 myshell.cpp          - Entry point
@@ -93,6 +93,30 @@ Makefile             - Build configuration
 ```
 
 Header files (`.hpp`) are used to separate interface from implementation.
+
+### 🏗 Architecture Overview
+
+```
+           +----------------+
+           |   User Input   |
+           +----------------+
+                    |
+                    v
+           +----------------+
+           | Command Parser |
+           +----------------+
+                    |
+                    v
+                fork()
+               /      \
+              /        \
+             v          v
++----------------+  +------------------+
+|  Child Process |  |  Parent Process  |
+|   execvp()     |  |    waitpid()     |
++----------------+  +------------------+
+```
+
 
 ---
 
